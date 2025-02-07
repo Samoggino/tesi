@@ -35,7 +35,6 @@ def filter_graph(input_file, snapshot_date):
 
     # Aggiunta canali (archi) al grafo
     edge_list = []
-    filtered = 0
     for edge in data["edges"]:
         if (
             int(edge["capacity"]) > 0
@@ -44,10 +43,6 @@ def filter_graph(input_file, snapshot_date):
         ):
             G.add_edge(edge["node1_pub"], edge["node2_pub"])
             edge_list.append(edge)
-        else:
-            filtered += 1
-
-    print(f"Canali filtrati: {filtered}")
 
     # **Fase 1: Rimuovere nodi con last_update == 0 e nodi isolati**
     removed = True
