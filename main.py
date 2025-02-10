@@ -9,7 +9,7 @@ output_folder = "graphml"  # Cartella di output
 
 # Nomi dei file
 input_file_name = "lnd_1_graph_2025-02-06_00-00-21"
-graphml_file_name = "lnd_1_graph_2025-02-06_00-00-21"
+graphml_file_name = "prova"
 
 # Costruisci i percorsi dei file
 input_file = f"{input_folder}/{input_file_name}.json"

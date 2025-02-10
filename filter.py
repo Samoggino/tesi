@@ -1,6 +1,5 @@
 import json
 import networkx as nx
-from numpy import double
 from utils import convert_last_update_iso
 from datetime import datetime, timedelta
 
