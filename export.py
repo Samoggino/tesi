@@ -2,6 +2,7 @@
 import networkx as nx
 import os
 from utils import convert_attributes
+import json
 
 
 # Funzione per esportare il grafo in formato GraphML
@@ -26,3 +27,15 @@ def export_graph_to_graphml(filtered_nodes_data, filtered_channels, graphml_file
         print(f"Archi totali: {G.number_of_edges()}")
         nx.write_graphml(G, graphml_file)
         print(f"Graph exported to '{graphml_file}'")
+
+
+def export_graph_to_json(filtered_nodes_data, filtered_channels, json_file):
+    # Costruzione del dizionario
+    data = {"nodes": filtered_nodes_data, "edges": filtered_channels}
+
+    if os.path.exists(json_file):
+        print(f"Il file {json_file} esiste già. Non verrà sovrascritto.")
+    else:
+        # Salva il JSON
+        with open(json_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)

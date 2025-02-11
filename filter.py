@@ -61,13 +61,18 @@ def filter_graph(input_file, snapshot_date):
         G = G.subgraph(largest_component).copy()
 
     # **Fase 3: Ricostruire i dati filtrati con tutti i campi originali**
+    ## Togliendo il campo "features" e aggiungendo "last_update_iso" per 
+    ## alleggerire il file JSON finale
     filtered_nodes_data = []
     for n in G.nodes:
         node = node_map[n].copy()  # Copia i dati originali del nodo
+        if "features" in node:
+            del node["features"]  # Rimuovi il campo "features"
         node["last_update_iso"] = convert_last_update_iso(
             node.get("last_update", 0)
         )  # Nuovo campo ISO
         filtered_nodes_data.append(node)
+
 
     filtered_channels = [
         edge
