@@ -175,3 +175,7 @@ cython_debug/
 
 # SNAPSHOT
 snapshot/
+
+logs/
+
+topology/
