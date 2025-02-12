@@ -31,17 +31,21 @@ def filter_graph(input_file, snapshot_date):
             and one_year_ago <= datetime.utcfromtimestamp(last_update) <= snapshot_date
         ):
             G.add_node(node["pub_key"], last_update=last_update)
+        else:
+            print(f"Nodo ignorato: {node}")
 
     # Aggiunta canali (archi) al grafo
     edge_list = []
     for edge in data["edges"]:
         if (
             int(edge["capacity"]) > 0
-            and edge.get("node1_policy")
-            and edge.get("node2_policy")
+            # and edge.get("node1_policy")
+            # and edge.get("node2_policy")
         ):
             G.add_edge(edge["node1_pub"], edge["node2_pub"])
             edge_list.append(edge)
+        else:
+            print(f"Canale ignorato: {edge}")
 
     # **Fase 1: Rimuovere nodi con last_update == 0 e nodi isolati**
     removed = True
