@@ -175,6 +175,8 @@ cython_debug/
 
 # SNAPSHOT
 snapshot/
+graphml/
+json/
 
 logs/
 
