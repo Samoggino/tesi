@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 def filter_graph(input_file, snapshot_date):
     # Calcolare la data limite (1 anno prima della data dello snapshot)
-    one_year_ago = snapshot_date - timedelta(days=365)
+    # one_year_ago = snapshot_date - timedelta(days=365)
 
     # Carica il JSON
     try:
@@ -23,24 +23,29 @@ def filter_graph(input_file, snapshot_date):
     # Mappa pub_key -> nodo per preservare tutti i dati originali
     node_map = {node["pub_key"]: node for node in data["nodes"]}
 
+    excluded_nodes = 0
     # Aggiunta nodi al grafo, filtrando per last_update
     for node in data["nodes"]:
         last_update = node.get("last_update", 0)
         if (
-            last_update > 0
-            and one_year_ago <= datetime.utcfromtimestamp(last_update) <= snapshot_date
+            # last_update > 0
+            # and one_year_ago <= datetime.utcfromtimestamp(last_update) <= snapshot_date
+            True
         ):
             G.add_node(node["pub_key"], last_update=last_update)
         else:
-            print(f"Nodo ignorato: {node}")
+            excluded_nodes += 1
+            # print(f"Nodo ignorato: {node}")
 
+    print(f"Excluded nodes: {excluded_nodes}")
     # Aggiunta canali (archi) al grafo
     edge_list = []
     for edge in data["edges"]:
         if (
-            int(edge["capacity"]) > 0
+            # int(edge["capacity"]) > 0
             # and edge.get("node1_policy")
             # and edge.get("node2_policy")
+            True
         ):
             G.add_edge(edge["node1_pub"], edge["node2_pub"])
             edge_list.append(edge)

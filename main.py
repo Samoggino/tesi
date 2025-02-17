@@ -7,16 +7,18 @@ from datetime import datetime
 input_folder = "json"  # Cartella di input
 output_folder = "graphml"  # Cartella di output
 
+date = "2021-01-01" 
+
 # Nomi dei file
-input_file_name = "output_data"
-graphml_file_name = "snapshot"
+input_file_name = "lnd_2021"
+graphml_file_name = "snapshot" + "_" + str(date)
 
 # Costruisci i percorsi dei file
 input_file = f"{input_folder}/{input_file_name}.json"
 graphml_file = f"{output_folder}/{graphml_file_name}.graphml"
 
 # Data dello snapshot (estratta dal nome del file)
-snapshot_date = datetime.strptime("2021-04-01", "%Y-%m-%d")
+snapshot_date = datetime.strptime(str(date), "%Y-%m-%d")
 
 # Filtra i dati
 filtered_nodes_data, filtered_channels = filter_graph(input_file, snapshot_date)

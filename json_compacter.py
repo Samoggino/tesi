@@ -1,12 +1,12 @@
 import json
 
 # Carica il JSON
-with open("json/lnd_1_graph_2025-02-06_00-00-21-filtered.json", "r", encoding="utf-8") as f:
+with open("json/lnd_2023-filtered.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 for node in data.get("nodes", []):
     node.pop("features", None)
-    # node.pop("addresses", None)
+    node.pop("addresses", None)
     node.pop("custom_records", None)
     
 for edge in data.get("edges", []):
@@ -18,5 +18,5 @@ for edge in data.get("edges", []):
 print("Ci sono {} nodi e {} archi.".format(len(data.get("nodes", [])), len(data.get("edges", []))))
 
 # Salva il JSON modificato
-with open("json/compacted_2025-02-06.json", "w", encoding="utf-8") as f:
+with open("json/compacted_2023.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)

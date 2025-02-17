@@ -2,9 +2,11 @@ from read_write import read_input_json, write_output_json
 from channel_processing import process_channels
 from node_conversion import convert_nodes
 
+anno = "2021"
+
 # Specifica dei nomi dei file
-input_file = '../topology/lntopo/pippo.json'
-output_file = '../json/output_data.json'
+input_file = '../topology/lntopo/' + str(anno) + '.json'
+output_file = '../json/lnd_' + str(anno) + '.json'
 
 # Lettura dei dati di input
 data = read_input_json(input_file)
