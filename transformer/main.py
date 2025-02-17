@@ -4,8 +4,8 @@ from export import export_graph_to_graphml, export_graph_to_json
 from datetime import datetime
 
 # Nomi delle cartelle di input e output
-input_folder = "json"  # Cartella di input
-output_folder = "graphml"  # Cartella di output
+input_folder = "../json"  # Cartella di input
+output_folder = "../graphml"  # Cartella di output
 
 date = "2021-01-01" 
 
