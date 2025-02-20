@@ -176,8 +176,10 @@ cython_debug/
 # SNAPSHOT
 snapshot/
 graphml/
-json/
+jsons/
 
 logs/
 
 topology/
+
+*.cys
