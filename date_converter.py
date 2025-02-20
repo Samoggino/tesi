@@ -16,7 +16,9 @@ def convert_to_timestamp(date_str):
 
 # date_input = "2020-10-14" # 2020
 
-date_input = "2021-01-01" # 2021
+# date_input = "2021-01-01" # 2021
+
+date_input = "2021-12-31" # 2021
 
 # date_input = "2022-03-31" # 2022 1648677600 
 

@@ -4,7 +4,7 @@ from utils import convert_last_update_iso
 from datetime import datetime, timedelta
 
 
-def filter_graph(input_file, snapshot_date):
+def filter_graph(input_file): # ,snapshot_date):
     # Calcolare la data limite (1 anno prima della data dello snapshot)
     # one_year_ago = snapshot_date - timedelta(days=365)
 
@@ -33,6 +33,7 @@ def filter_graph(input_file, snapshot_date):
             True
         ):
             G.add_node(node["pub_key"], last_update=last_update)
+            
         else:
             excluded_nodes += 1
             # print(f"Nodo ignorato: {node}")
@@ -48,6 +49,9 @@ def filter_graph(input_file, snapshot_date):
             True
         ):
             G.add_edge(edge["node1_pub"], edge["node2_pub"])
+            # rimuovi le policy per ridurre la dimensione del file
+            del edge["node1_policy"]
+            del edge["node2_policy"]
             edge_list.append(edge)
         else:
             print(f"Canale ignorato: {edge}")
@@ -57,7 +61,7 @@ def filter_graph(input_file, snapshot_date):
     while removed:
         removed = False
         nodes_to_remove = {
-            n for n, attr in G.nodes(data=True) if attr.get("last_update", 0) == 0
+            # n for n, attr in G.nodes(data=True) if attr.get("last_update", 0) == 0
         }
 
         if nodes_to_remove:
@@ -65,9 +69,9 @@ def filter_graph(input_file, snapshot_date):
             removed = True  # Continua finché ci sono nodi da eliminare
 
     # **Fase 2: Mantenere solo la componente connessa più grande**
-    if len(G.nodes) > 0:
-        largest_component = max(nx.connected_components(G), key=len)
-        G = G.subgraph(largest_component).copy()
+    # if len(G.nodes) > 0:
+    #     largest_component = max(nx.connected_components(G), key=len)
+    #     G = G.subgraph(largest_component).copy()
 
     # **Fase 3: Ricostruire i dati filtrati con tutti i campi originali**
     ## Togliendo il campo "features" e aggiungendo "last_update_iso" per 
@@ -77,9 +81,11 @@ def filter_graph(input_file, snapshot_date):
         node = node_map[n].copy()  # Copia i dati originali del nodo
         if "features" in node:
             del node["features"]  # Rimuovi il campo "features"
-        node["last_update_iso"] = convert_last_update_iso(
-            node.get("last_update", 0)
-        )  # Nuovo campo ISO
+        if "addresses" in node:
+            del node["addresses"]
+        # node["last_update_iso"] = convert_last_update_iso(
+        #     node.get("last_update", 0)
+        # )  # Nuovo campo ISO
         filtered_nodes_data.append(node)
 
 
