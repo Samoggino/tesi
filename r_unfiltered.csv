@@ -1,0 +1,2 @@
+network	nodeCount	edgeCount	avNeighbors	diameter	radius	avSpl	cc	density	heterogeneity	centralization	ncc	Med Degree	Avg Degree	C/N	% Nodes	% Channels	Max Degree
+random_graph,graphml	16267	48954	6,018811089936682	10	7	5,6207600797557	3,6640852095453437E-4	3,700240433995255E-4	0,3996177532248636	6,751837694940126E-4	1	6,0	6,018811089936682	3,009405544968341	0,9982204221894944	1,0	17
