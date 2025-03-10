@@ -17,13 +17,14 @@ from utils import (
 #     "snapshot_2024.graphml",
 #     "snapshot_2025.graphml",
 # ]
-network_list = ["snapshot_2025.graphml"]
+# network_list = ["snapshot_2025.graphml"]
+network_list = ["random_graph.graphml"]
 
 # Crea una lista per raccogliere i risultati
 analysis_results = []
 
 top = 100
-min_degree = 1
+min_degree = 2
 # max_degree = 100000
 
 # Itera su ogni rete
@@ -66,7 +67,9 @@ for network_name in network_list:
         )
     else:
         # Nome del subnetwork da creare
-        subnetwork_name = f"Subnetwork_Degree_Between_{min_degree}_and_{max_degree}_{network_name}"
+        subnetwork_name = (
+            f"Subnetwork_Degree_Between_{min_degree}_and_{max_degree}_{network_name}"
+        )
 
         # Ottieni la lista delle reti esistenti
         existing_networks = py4.get_network_list()
@@ -111,9 +114,6 @@ for network_name in network_list:
         results["% Nodes"] = int(results["nodeCount"]) / initial_node_count
         results["% Channels"] = int(results["edgeCount"]) / initial_edge_count
         results["Max Degree"] = subnetwork_df["Degree"].max()
-        
-        # min_degree
-        print(f"min_degree: {subnetwork_df['Degree'].min()}")
 
         # rimuovi la colonna time dal result
         results.pop("time", None)
@@ -127,4 +127,4 @@ for network_name in network_list:
 
         print(f"Rete {network_name} analizzata.")
 
-# export_analysis_to_csv(analysis_results)
+export_analysis_to_csv(analysis_results)

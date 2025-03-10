@@ -31,6 +31,9 @@ def pandas_degree():
     # Converte la tabella in un DataFrame pandas
     df = pd.DataFrame(node_table)
 
+    # stampa le colonne
+    print("Colonne disponibili:", df.columns.tolist())
+
     # Assicurati che la colonna 'Degree' sia numerica
     df["Degree"] = pd.to_numeric(df["Degree"], errors="coerce")
 
@@ -39,7 +42,7 @@ def pandas_degree():
 
     # Crea una lista di tuple (node_suid, degree)
     nodes_with_degrees = [
-        (pub_key, degree) for pub_key, degree in zip(df["pub_key"], df["Degree"])
+        (shared_name, degree) for shared_name, degree in zip(df["shared name"], df["Degree"])
     ]
 
     # Ordina i nodi per grado in ordine decrescente
