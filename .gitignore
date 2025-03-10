@@ -184,3 +184,5 @@ topology/
 
 *.cys
 graphml.tar.xz
+graphml_weighted/
+*.tar.xz

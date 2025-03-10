@@ -4,14 +4,16 @@ from export import export_graph_to_graphml, export_graph_to_json
 from datetime import datetime
 
 # Nomi delle cartelle di input e output
-input_folder = "../jsons"  # Cartella di input
-output_folder = "../graphml"  # Cartella di output
+input_folder = "../jsons/analisi"  # Cartella di input
+output_folder = "../graphml/analisi"  # Cartella di output
 
 date = "2025" 
 
 # Nomi dei file
-input_file_name = "lnd_" + str(date)
-graphml_file_name = "snapshot" + "_" + str(date)
+# input_file_name = "lnd_" + str(date)
+# graphml_file_name = "snapshot" + "_" + str(date)
+input_file_name = "lnd_2_graph_2025-02-06_00-00-21"
+graphml_file_name = "2_snapshot"
 
 # Costruisci i percorsi dei file
 input_file = f"{input_folder}/{input_file_name}.json"
