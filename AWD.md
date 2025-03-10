@@ -1,0 +1,43 @@
+AWD per graphml_weighted/2019/snapshot_2019: 72,59830796657343
+AWD per graphml_weighted/2020/snapshot_2020: 4758,458245276951
+AWD per graphml_weighted/2021/snapshot_2021: 1141,4947945928575
+AWD per graphml_weighted/2022/snapshot_2022: 13425,282096002615
+AWD per graphml_weighted/2023/snapshot_2023: 2732,1577056393126
+AWD per graphml_weighted/2024/snapshot_2024: 125,46191937838252
+AWD per graphml_weighted/2025/snapshot_2025: 129,60663070585264
+
+
+
+AWD per graphml_weighted/2019/Subnetwork_Degree_Between_2_and_100000_snapshot_2019: 92,44947395957165
+AWD per graphml_weighted/2020/Subnetwork_Degree_Between_2_and_100000_snapshot_2020: 5633,794871188709
+AWD per graphml_weighted/2021/Subnetwork_Degree_Between_2_and_100000_snapshot_2021: 1731,2862012638336
+AWD per graphml_weighted/2022/Subnetwork_Degree_Between_2_and_100000_snapshot_2022: 20461,06708057437
+AWD per graphml_weighted/2023/Subnetwork_Degree_Between_2_and_100000_snapshot_2023: 4340,436949112986
+AWD per graphml_weighted/2024/Subnetwork_Degree_Between_2_and_100000_snapshot_2024: 207,32331935115323
+AWD per graphml_weighted/2025/Subnetwork_Degree_Between_2_and_100000_snapshot_2025: 217,18035404642984
+
+
+
+AWD per graphml_weighted/2019/Subnetwork_Degree_Between_2_  and_428_snapshot_2019: 70,49527497919647
+AWD per graphml_weighted/2020/Subnetwork_Degree_Between_2_  and_449_snapshot_2020: 58,58569142881929
+AWD per graphml_weighted/2021/Subnetwork_Degree_Between_2_and_484,0_snapshot_2021: 57,9759729370482
+AWD per graphml_weighted/2022/Subnetwork_Degree_Between_2_and_900,0_snapshot_2022: 15965,670763931379
+AWD per graphml_weighted/2023/Subnetwork_Degree_Between_2_and_600,0_snapshot_2023: 4101,518689332421
+AWD per graphml_weighted/2024/Subnetwork_Degree_Between_2_and_633,0_snapshot_2024: 199,96915981316647
+AWD per graphml_weighted/2025/Subnetwork_Degree_Between_2_and_612,0_snapshot_2025: 209,82948609714384
+
+
+
+AWD per graphml_weighted/2019/Subnetwork_Degree_Between_2_and_83 ,0_snapshot_2019: 32,35782528525287
+AWD per graphml_weighted/2020/Subnetwork_Degree_Between_2_and_88 ,0_snapshot_2020: 26,14386638735172
+AWD per graphml_weighted/2021/Subnetwork_Degree_Between_2_and_82 ,0_snapshot_2021: 26,840389777363455
+AWD per graphml_weighted/2022/Subnetwork_Degree_Between_2_and_183,0_snapshot_2022: 696,3023223723518
+AWD per graphml_weighted/2023/Subnetwork_Degree_Between_2_and_153,0_snapshot_2023: 2939,011254574272
+AWD per graphml_weighted/2024/Subnetwork_Degree_Between_2_and_107,0_snapshot_2024: 125,75061906790407
+AWD per graphml_weighted/2025/Subnetwork_Degree_Between_2_and_101,0_snapshot_2025: 131,91546804552738
+
+
+
+
+
+AWD per graphml_weighted/2025/Subnetwork_Degree_Between_1_and_101,0_snapshot_2025: 79,07712784795173

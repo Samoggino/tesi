@@ -17,13 +17,13 @@ from utils import (
 #     "snapshot_2024.graphml",
 #     "snapshot_2025.graphml",
 # ]
-# network_list = ["snapshot_2025.graphml"]
-network_list = ["random_graph.graphml"]
+network_list = ["snapshot_2025.graphml"]
+# network_list = ["random_graph.graphml"]
 
 # Crea una lista per raccogliere i risultati
 analysis_results = []
 
-top = 100
+top = 10
 min_degree = 2
 # max_degree = 100000
 
