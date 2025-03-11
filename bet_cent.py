@@ -2,8 +2,11 @@ import networkx as nx
 import plotly.graph_objects as go
 import numpy as np
 
+from cytoscape.utils import get_unique_filename
+
 # Carica il grafo del 2025
-G = nx.read_graphml(f"graphml_weighted/2025/snapshot_2025.graphml.graphml")
+# G = nx.read_graphml(f"graphml_weighted/2025/snapshot_2025.graphml.graphml")
+G = nx.read_graphml(f"graphml_weighted/2025/Subnetwork_Degree_Between_2_and_100000_snapshot_2025.graphml.graphml")
 
 # Converte il grafo diretto in un grafo non diretto
 G_undirected = G.to_undirected()
@@ -27,6 +30,9 @@ node_aliases = [data.get('alias', 'No Alias') for _, data in G_largest.nodes(dat
 # Crea una lista di etichette che mostreranno sempre per i nodi con degree > 500
 always_labels = ['' if degree <= 950 else alias for degree, alias in zip(degree_values, node_aliases)]
 
+# Calcola la correlazione tra Degree e Betweenness Centrality
+correlation = np.corrcoef(degree_values, betweenness_values)[0, 1]
+
 # Crea il grafico con Plotly
 fig = go.Figure()
 
@@ -42,13 +48,15 @@ fig.add_trace(go.Scatter(
 
 # Aggiungi titolo e etichette agli assi
 fig.update_layout(
-    title='Relazione tra Degree e Betweenness Centrality (Componente Connessa Più Grande)',
+    title=f'Degree by Betweenness Centrality',
     xaxis_title='Degree',
     yaxis_title='Betweenness Centrality',
     showlegend=False  # Disabilita la legenda
 )
 
-# Esporta il grafico come PNG
-fig.write_image("graph_output.png")
+# Salva il grafico come immagine
+filename = get_unique_filename("graph_output",".png")
+fig.write_image(filename)
 
-print("Il grafico è stato salvato come 'graph_output.png'.")
+print(f"Correlazione tra Degree e Betweenness Centrality: {correlation}")
+print("Il grafico è stato salvato come immagine:", filename)
