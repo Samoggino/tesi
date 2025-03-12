@@ -186,3 +186,4 @@ topology/
 graphml.tar.xz
 graphml_weighted/
 *.tar.xz
+csv

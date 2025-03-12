@@ -5,8 +5,13 @@ import numpy as np
 from cytoscape.utils import get_unique_filename
 
 # Carica il grafo del 2025
-# G = nx.read_graphml(f"graphml_weighted/2025/snapshot_2025.graphml.graphml")
-G = nx.read_graphml(f"graphml_weighted/2025/Subnetwork_Degree_Between_2_and_100000_snapshot_2025.graphml.graphml")
+
+n_nodi = 16688
+n_canali = 50565
+
+G = nx.read_graphml(f"graphml_weighted/2025/snapshot_2025.graphml.graphml")
+# G = nx.read_graphml(f"graphml_weighted/2025/Subnetwork_Degree_Between_2_and_100000_snapshot_2025.graphml.graphml")
+# G = nx.read_graphml(f"graphml_weighted/2025/Subnetwork_Degree_Between_2_and_612.0_snapshot_2025.graphml.graphml")
 
 # Converte il grafo diretto in un grafo non diretto
 G_undirected = G.to_undirected()
@@ -20,15 +25,25 @@ largest_component = max(connected_components, key=len)
 # Crea un nuovo grafo che contiene solo i nodi della componente più grande
 G_largest = G.subgraph(largest_component)
 
-# Estrai gli attributi BetweennessCentrality e Degree dal grafo rimanente
-degree_values = [data['Degree'] for _, data in G_largest.nodes(data=True)]
-betweenness_values = [data['BetweennessCentrality'] for _, data in G_largest.nodes(data=True)]
+# salva il grafo in formato GraphML
+nx.write_graphml(G_largest, "graphml_weighted/2025/largest_component_2025.graphml")
 
-# Estrai le etichette (alias) dei nodi
-node_aliases = [data.get('alias', 'No Alias') for _, data in G_largest.nodes(data=True)]
+# Estrai gli attributi BetweennessCentrality, Degree e Alias dai nodi
+degree_values = []
+betweenness_values = []
+always_labels = []
 
-# Crea una lista di etichette che mostreranno sempre per i nodi con degree > 500
-always_labels = ['' if degree <= 950 else alias for degree, alias in zip(degree_values, node_aliases)]
+for _, data in G_largest.nodes(data=True):
+    degree = data['Degree']
+    betweenness = data['BetweennessCentrality']
+    alias = data.get('alias', 'No Alias')
+
+    degree_values.append(degree)
+    betweenness_values.append(betweenness)
+
+    # Assegna l'etichetta solo ai nodi con degree > 950
+    always_labels.append('' if degree <= 950 else alias)
+
 
 # Calcola la correlazione tra Degree e Betweenness Centrality
 correlation = np.corrcoef(degree_values, betweenness_values)[0, 1]
@@ -53,6 +68,25 @@ fig.update_layout(
     yaxis_title='Betweenness Centrality',
     showlegend=False  # Disabilita la legenda
 )
+
+# Aggiungi annotazioni per il numero di nodi e il numero di archi
+num_nodes = G_largest.number_of_nodes()
+num_edges = G_largest.number_of_edges()
+
+# Calcola la percentuale di nodi e canali nella componente connessa più grande
+percentuale_nodi = (num_nodes / n_nodi) * 100
+percentuale_canali = (num_edges / n_canali) * 100
+
+# Aggiungi annotazione con nodi, canali e correlazione
+fig.add_annotation(
+    x=0.5, y=1.10, 
+    text=f'Nodi: {num_nodes} ({percentuale_nodi:.2f}% del totale) , Canali: {num_edges} ({percentuale_canali:.2f}% del totale) ---- Correlazione: {correlation:.3f}',
+    showarrow=False,
+    font=dict(size=12),
+    xref="paper", yref="paper",
+    align="center"
+)
+
 
 # Salva il grafico come immagine
 filename = get_unique_filename("graph_output",".png")
