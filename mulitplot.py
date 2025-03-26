@@ -32,7 +32,7 @@ x_positions = np.arange(len(category_order))
 sorted_years = sorted(df["Snapshot"].unique())
 n_years = len(sorted_years)
 # Fattore per l'offset orizzontale (puoi modificarlo per aumentare/diminuire la separazione)
-offset_factor = 0.1
+offset_factor = 0.0
 
 # Funzione per creare i grafici
 def plot_metric(metric, ylabel, title, use_log=False):
