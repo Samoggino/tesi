@@ -28,7 +28,7 @@ for i, category in enumerate(categories):
 # Aggiungiamo etichette e altre personalizzazioni
 ax.set_xlabel('Segmento dei canali (quartili)')
 ax.set_ylabel('Percentuale della capacità totale (%)')
-ax.set_title('Distribuzione della capacità nei canali')
+ax.set_title('Distribuzione della liquidità nei canali')
 ax.set_xticks(x + width * (len(categories) - 1) / 2)
 ax.set_xticklabels(labels)
 ax.legend(title="Categorie di nodi")

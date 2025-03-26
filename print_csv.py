@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Percorso del file CSV (modifica se necessario)
-csv_file = 'csv-data/all.csv'
+csv_file = 'data.csv'
 
 # Leggi il CSV
 df = pd.read_csv(csv_file)
