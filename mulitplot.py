@@ -2,22 +2,22 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Percorso del file CSV (modifica se necessario)
+# Path to the CSV file (modify if needed)
 csv_file = "data.csv"
 
-# Legge il CSV
+# Read the CSV file
 df = pd.read_csv(csv_file)
 
-# Converte la colonna 'Snapshot' in intero (rappresenta l'anno)
+# Convert 'Snapshot' column to integer (represents the year)
 df["Snapshot"] = df["Snapshot"].astype(int)
 
 important_metrics = ["Clustering", "APL", "Avg Neighbors", "Centralization", "σ", "CC"]
 
-# Converte le colonne in float gestendo il separatore decimale
+# Convert metrics to float, handling comma as decimal separator
 for col in important_metrics:
     df[col] = df[col].apply(lambda x: float(str(x).replace(",", ".")))
 
-# Ordine delle categorie per l'asse x
+# Define the order of categories for the x-axis
 category_order = [
     "unfiltered",
     "min_2",
@@ -25,54 +25,99 @@ category_order = [
     "top100 excluded & min_2",
 ]
 
-# Crea un array numerico per le categorie (0, 1, 2, 3)
+# Mapping for simplified legend labels
+category_labels = {
+    "unfiltered": "unfiltered",
+    "min_2": "channels >= 2",
+    "top10 excluded & min_2": "top10 removed",
+    "top100 excluded & min_2": "top100 removed",
+}
+
+# Create a numeric array for categories (0, 1, 2, 3)
 x_positions = np.arange(len(category_order))
 
-# Ottiene gli anni ordinati (dal 2019 al 2025)
+# Get sorted years (from 2019 to 2025)
 sorted_years = sorted(df["Snapshot"].unique())
 n_years = len(sorted_years)
-# Fattore per l'offset orizzontale (puoi modificarlo per aumentare/diminuire la separazione)
+
+# Offset factor for horizontal displacement (adjust to increase/decrease separation)
 offset_factor = 0.0
 
-# Funzione per creare i grafici
+
+# Function to plot metrics by category (grouped by year)
 def plot_metric(metric, ylabel, title, use_log=False):
     plt.figure(figsize=(8, 5))
     for i, year in enumerate(sorted_years):
-        # Calcola un offset per ogni anno: distribuito in modo simmetrico
+        # Compute horizontal offset for each year (centered distribution)
         offset = (i - (n_years - 1) / 2) * offset_factor
-        # Filtra i dati per l'anno corrente e imposta l'ordine delle categorie
+        # Filter data for the current year and sort categories
         df_year = df[df["Snapshot"] == year].copy()
-        df_year["Categoria"] = pd.Categorical(df_year["Categoria"], categories=category_order, ordered=True)
+        df_year["Categoria"] = pd.Categorical(
+            df_year["Categoria"], categories=category_order, ordered=True
+        )
         df_year = df_year.sort_values("Categoria")
-        # Le posizioni x per questo anno saranno gli x originali + offset
+        # Compute x values with offset
         x_vals = x_positions + offset
         plt.plot(
-            x_vals,
-            df_year[metric].values,
-            marker="o",
-            linestyle="-",
-            label=str(year)
+            x_vals, df_year[metric].values, marker="o", linestyle="-", label=str(year)
         )
     plt.ylabel(ylabel)
     plt.title(title)
-    plt.xticks(x_positions, ["unfiltered", "min_2", "top10", "top100"])
+    plt.xticks(x_positions, ["unfiltered", "min2", "top10", "top100"])
     if use_log:
         plt.yscale("log")
-    plt.legend(title="Anno")
+    plt.legend(title="Year")
     plt.grid(True)
     plt.tight_layout()
     plt.show()
 
-# Crea i grafici per ogni metrica
-# Aggiungi use_log=True se desideri usare la scala logaritmica per l'asse y
+
+# Function to plot metric trends over time (grouped by category)
+
+
+def plot_metric_by_year(metric, ylabel, title, use_log=False):
+    plt.figure(figsize=(8, 5))
+    for category in category_order:
+        df_cat = df[df["Categoria"] == category]
+        df_cat = df_cat.sort_values("Snapshot")
+        label = category_labels.get(category, category)
+        plt.plot(
+            df_cat["Snapshot"], df_cat[metric], marker="o", linestyle="-", label=label
+        )
+    plt.xlabel("Year")
+    plt.ylabel(ylabel)
+    plt.title(title)
+    if use_log:
+        plt.yscale("log")
+    plt.xticks(sorted_years)
+    plt.legend(title="Category")
+    plt.grid(True)
+    plt.tight_layout()
+    # Save the figure
+    filename = f"plot/{metric}_over_time.png"
+    plt.savefig(filename, dpi=300)
+    plt.close()
+
+
+# Create plots for each metric
+# Add use_log=True to use a logarithmic scale for the y-axis
 # plot_metric("Clustering", "CC", "Clustering Coefficient (CC)")
 # plot_metric("APL", "APL", "Average Path Length (APL)")
 # plot_metric("Avg Neighbors", "AND", "Average Neighbors Degree (AND)")
 # plot_metric("Centralization", "NC", "Network Centralization (NC)")
 # plot_metric("σ", "σ", "Sigma σ")
-plot_metric("CC", "Connected Components", "Connected Components")
+# plot_metric("CC", "Connected Components", "Connected Components")
+
+plot_metric_by_year("Clustering", "CC", "Clustering Coefficient (CC) over time by category")
+plot_metric_by_year("APL", "APL", "Average Path Length (APL) over time by category")
+plot_metric_by_year("Avg Neighbors", "AND", "Average Neighbors Degree (AND) over time by category")
+plot_metric_by_year("Centralization", "NC", "Network Centralization (NC) over time by category")
+plot_metric_by_year("σ", "σ", "Sigma σ over time by category")
+plot_metric_by_year("CC", "Connected Components", "Connected Components over time by category")
 
 
+
+# Optional: plot metrics over time for only the 'unfiltered' category
 # def plot_metric_unfiltered(metric, ylabel, title, use_log=False):
 #     plt.figure(figsize=(8, 5))
 #     df_unfiltered = df[df["Categoria"] == "unfiltered"]
@@ -83,7 +128,7 @@ plot_metric("CC", "Connected Components", "Connected Components")
 #         linestyle="-",
 #         label=metric
 #     )
-#     plt.xlabel("Anno")
+#     plt.xlabel("Year")
 #     plt.ylabel(ylabel)
 #     plt.title(title)
 #     if use_log:
@@ -92,10 +137,10 @@ plot_metric("CC", "Connected Components", "Connected Components")
 #     plt.xticks(sorted_years)
 #     plt.show()
 
-# # Creazione dei grafici per ogni metrica
-# plot_metric_unfiltered("Clustering", "CC", "Andamento del Clustering Coefficient (CC) nel tempo")
-# plot_metric_unfiltered("APL", "APL", "Andamento dell'Average Path Length (APL) nel tempo")
-# plot_metric_unfiltered("Avg Neighbors", "AND", "Andamento dell'Average Neighbors Degree (AND) nel tempo")
-# plot_metric_unfiltered("Centralization", "NC", "Andamento della Network Centralization (NC) nel tempo")
-# plot_metric_unfiltered("σ", "σ", "Andamento di Sigma σ nel tempo")
-# plot_metric_unfiltered("CC", "Connected Components", "Andamento delle Connected Components nel tempo")
+# # Generate time trend plots for each metric (unfiltered only)
+# plot_metric_unfiltered("Clustering", "CC", "Clustering Coefficient (CC) over time")
+# plot_metric_unfiltered("APL", "APL", "Average Path Length (APL) over time")
+# plot_metric_unfiltered("Avg Neighbors", "AND", "Average Neighbors Degree (AND) over time")
+# plot_metric_unfiltered("Centralization", "NC", "Network Centralization (NC) over time")
+# plot_metric_unfiltered("σ", "σ", "Sigma σ over time")
+# plot_metric_unfiltered("CC", "Connected Components", "Connected Components over time")
