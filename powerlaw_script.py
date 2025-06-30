@@ -9,7 +9,12 @@ xmin_values = []
 
 # Analisi per ogni anno
 for year in years:
-    G = nx.read_graphml(f"graphml_weighted/{year}/snapshot_{year}.graphml.graphml")
+
+    if year == 2025:
+        # Per il 2025, utilizziamo il grafo non filtrato
+        G = nx.read_graphml(f"graphml_weighted/2025/snapshot_2025_unfiltered_weights.graphml")
+    else:
+        G = nx.read_graphml(f"graphml_weighted/{year}/snapshot_{year}.graphml.graphml")
     node_degrees = [degree for node, degree in G.degree()]
     
     power_law_fit = powerlaw.Fit(node_degrees)
