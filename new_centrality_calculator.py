@@ -1,6 +1,6 @@
 import networkx as nx
 
-path = "graphml_weighted/2025/snapshot_2025_unfiltered_weights.graphml"
+path = "graphml_weighted/2025/snapshot_2025.graphml"
 G = nx.read_graphml(path)
 
 # non so se serva convertirlo in non diretto, ma se lo è, lo faccio
